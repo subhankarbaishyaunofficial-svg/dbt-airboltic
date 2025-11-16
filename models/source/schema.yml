@@ -1,9 +1,33 @@
 
 version: 2
 
+sources:
+  - name: airboltic_gsheet
+    database: db_prod
+    schema: gsheet
+
+  - name: airboltic
+    database: db_prod
+    schema: airboltic_json
+
+
+    tables:
+      - name: cutomer_group
+        freshness: null
+      - name: cutomer
+        freshness: null
+      - name: order
+        freshness: null
+      - name: trip
+        freshness: null
+      - name: aeroplane
+        freshness: null
+      - name: aeroplane_model
+        freshness: null
+
 models:
-    - name: my_first_dbt_model
-      description: "A starter dbt model"
+    - name: src_cutomer_group
+      description: "Customer Group by segment"
       columns:
           - name: id
             description: "The primary key for this table"
@@ -11,11 +35,50 @@ models:
                 - unique
                 - not_null
 
-    - name: my_second_dbt_model
-      description: "A starter dbt model"
+    - name: src_customer
+      description: "Customer Data"
       columns:
-          - name: id
+          - name: customer_id
             description: "The primary key for this table"
             tests:
                 - unique
                 - not_null
+
+    - name: src_order
+      description: "Order table"
+      columns:
+          - name: order_id
+            description: "The primary key for this table"
+            tests:
+                - unique
+                - not_null
+
+    - name: src_trip
+      description: "trip details"
+      columns:
+          - name: trip_id
+            description: "The primary key for this table"
+            tests:
+                - unique
+                - not_null
+              
+    - name: src_aeroplane
+      description: "Airplane details"
+      columns:
+          - name: aeroplane_id
+            description: "The primary key for this table"
+            tests:
+                - unique
+                - not_null
+
+    - name: src_aeroplane_model
+      description: "Airplane model details"
+      columns:
+          - name: aeroplane_id
+            description: "The primary key for this table"
+            tests:
+            - dbt_utils.unique_combination_of_columns:
+                combination_of_columns:
+                  - company
+                  - flight_type
+                  - property

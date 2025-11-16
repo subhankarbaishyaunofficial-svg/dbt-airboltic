@@ -1,3 +1,10 @@
+{{
+    config(
+        materialized = 'table'
+    )
+}}
+
+
 WITH src AS (
 SELECT json_data AS data
 FROM {{ source('airboltic', 'aeroplane_model') }}

@@ -1,27 +1,16 @@
 
-/*
-    Welcome to your first dbt model!
-    Did you know that you can also configure models directly within SQL files?
-    This will override configurations stated in dbt_project.yml
+{{
+    config(
+        materialized = 'table'
+    )
+}}
 
-    Try changing "table" to "view" below
-*/
-
-{{ config(materialized='table') }}
-
-with source_data as (
-
-    select 1 as id
-    union all
-    select null as id
-
-)
-
-select *
-from source_data
-
-/*
-    Uncomment the line below to remove records with null `id` values
-*/
-
--- where id is not null
+SELECT  
+TRIM("Customer ID", '" "') AS customer_id,
+Name AS name,
+TRIM("Customer Group ID", '" "') AS customer_group_id,
+Email AS email,
+TRIM("Phone Number", '" "') AS phone_number,
+GETDATE() AS inserted_at
+		
+FROM {{ source('airboltic_gsheet', 'customer') }}

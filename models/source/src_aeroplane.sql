@@ -1,6 +1,13 @@
+{{
+    config(
+        materialized = 'table'
+    )
+}}
 
--- Use the `ref` function to select from other models
-
-select *
-from {{ ref('my_first_dbt_model') }}
-where id = 1
+SELECT 
+TRIM("Airplane ID", '" "') AS aeroplane_id,
+TRIM("Airplane Model", '" "') AS aeroplane_model,
+TRIM("Manufacturer", '" "') AS manufacturer,
+GETDATE() AS inserted_at
+		
+FROM {{ source('airboltic_gsheet', 'aeroplane') }}

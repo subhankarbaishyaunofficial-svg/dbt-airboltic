@@ -79,6 +79,6 @@ models:
             tests:
             - dbt_utils.unique_combination_of_columns:
                 combination_of_columns:
-                  - company
+                  - flight_manufacturer
                   - flight_type
                   - property
